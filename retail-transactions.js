@@ -1,9 +1,4 @@
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const COLORS = ["red", "orange", "yellow", "green", "blue", "purple"];
-const ITEMS = ["blouse", "skirt", "dress", "hat", "shoes", "jacket"];
-const NUM_CUSTOMERS = 250;
-const NUM_TRANSACTIONS = NUM_CUSTOMERS * 2;
-
+import createCsvWriter, COLORS, ITEMS, NUM_CUSTOMERS, NUM_TRANSACTIONS, getRandomInt from "./retail-common.js";
 
 const ALL_PRODUCTS = COLORS.flatMap(c => ITEMS.map(i => c+"_"+i));
 header = ["id", "user_id", ...ALL_PRODUCTS, "sale"];
@@ -63,25 +58,3 @@ csvWriter.writeRecords(records)
 .then(() => {
     console.log('Wrote ' + recordCount);
 });
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-
-
-// const records = [
-// {name: 'Bob',  lang: 'French, English'},
-// {name: 'Mary', lang: 'English'}
-// ];
-
-// csvWriter.writeRecords(records)       // returns a promise
-// .then(() => {
-//     console.log('...Done');
-// });
-
-// csvWriter.writeRecords(records)       // returns a promise
-// .then(() => {
-//     console.log('...Done');
-// });
-

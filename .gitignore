@@ -1,3 +1,6 @@
+#Generated CSV files
+*.csv
+
 # Logs
 logs
 *.log
