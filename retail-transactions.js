@@ -1,14 +1,22 @@
-import createCsvWriter, COLORS, ITEMS, NUM_CUSTOMERS, NUM_TRANSACTIONS, getRandomInt from "./retail-common.js";
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const COLORS = ["red", "orange", "yellow", "green", "blue", "purple"];
+const ITEMS = ["blouse", "skirt", "dress", "hat", "shoes", "jacket"];
+const NUM_CUSTOMERS = 250;
+const NUM_TRANSACTIONS = NUM_CUSTOMERS * 2;
+
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 const ALL_PRODUCTS = COLORS.flatMap(c => ITEMS.map(i => c+"_"+i));
-header = ["id", "user_id", ...ALL_PRODUCTS, "sale"];
-// console.log(header);
+header = ["rowkey", "user_id", ...ALL_PRODUCTS, "sale"];
 
 //Make header a map so it adds header row
 header = header.map(h => ({id: h, title:h}));
 
 const csvWriter = createCsvWriter({
-    path: './retail-transactions.csv',
+    path: `./retail-transactions-${NUM_TRANSACTIONS}.csv`,
     header
 });
 
@@ -25,13 +33,12 @@ for (let i = 0; i < NUM_CUSTOMERS; i++) {
 }
 
 let records = [];
-let recordCount = 0;
 for (let i = 0; i < NUM_TRANSACTIONS; i++) {
     let shopperI = getRandomInt(shoppers.length);
     let shopper = shoppers[shopperI]
     let user_id =shopper.color+shopperI;
     let record = {
-        id: user_id+Date.now(),
+        rowkey: user_id+Date.now(),
         user_id,
         sale: [],
     }
@@ -53,8 +60,7 @@ for (let i = 0; i < NUM_TRANSACTIONS; i++) {
     records.push(record);
 }
 
-recordCount += records.length;
 csvWriter.writeRecords(records)
 .then(() => {
-    console.log('Wrote ' + recordCount);
+    console.log('Wrote ' + records.length);
 });
