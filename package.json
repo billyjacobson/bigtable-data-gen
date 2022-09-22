@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "csv-writer": "^1.6.0",
+    "prepend-file": "^2.0.0",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0"
   }
 }
